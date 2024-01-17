@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+    <title>Tenant Profile</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+</head>
+<body class = "dashboard_body">
+    <div class="container-fluid">
+        <div class="dashboard_head">
+            <div>
+                <a href="{% url 'dashboard:logout_user' %}">Logout</a>
+            </div>
+        </div>
+        <form method="get" action="{% url 'dashboard:search_units' serializer_data.tenant.user.id  %}">
+            <input type="text" name="query" value="{{ query }}" placeholder="Enter search query">
+            <button type="submit">Search</button>
+        </form>
+        <ul>
+           
+                {% for item in data %}
+                        <li>{{ item.properties.name }} - {{ item.rent_cost }}</li>
+                {% endfor %}
+            
+        </ul>
+
+        <div>
+            <h2>Tenant Profile</h2>
+        </div>
+        {% if serializer_data %}
+        <div class="tenant_profile_card">
+            <div>
+                Name : {{serializer_data.tenant.user.name}}
+            </div>
+            <div>
+                Address : {{serializer_data.tenant.address}}
+            </div>
+            <div>
+                Document : {{serializer_data.tenant.document_proofs}}
+            </div>
+        </div>
+        <div>
+            <h2>Rental Details</h2>
+        </div>
+        <div class="tenant_profile_card">
+            <div>
+                Unit : {{serializer_data.unit.unit_type}}
+            </div>
+            <div>
+                Rent amount : {{serializer_data.unit.rent_cost}}
+            </div>
+            <div>
+                Rental agreement end date : {{serializer_data.agreement_end_date}}
+            </div>
+            <div>
+                Monthly rent payemnt date : {{serializer_data.monthly_rent_date}}
+            </div>
+        </div>
+        {% endif %}
+        {% if error %}
+        <div>
+            {{ error }}
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>

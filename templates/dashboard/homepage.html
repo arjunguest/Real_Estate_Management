@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+    <title>Dashboard</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+</head>
+<body class = "dashboard_body">
+    <div class="container-fluid">
+        <div class="dashboard_head">
+            <p class ="dashboard_p">Welcome : {{serializer_data.name}}</p>
+            <div>
+                <a href="{% url 'dashboard:tenant_details' serializer_data.id %}">View Profile</a>
+            </div>
+            <div>
+                <a href="{% url 'dashboard:logout_user'%}">Logout</a>
+            </div>
+        </div>
+        <div>
+            <h2>Available Properties</h2>
+        </div>
+        <div class="dashboard_col">
+            {% for i in content %}
+            <div class= "dashboard_card">
+                <div class= "dashboard_card_Pd">
+                    <div class="dashboard_image_frame">
+                            <img src="{{i.properties.post_image.url}}" class="dashboard_image_size" alt="Image">
+                    </div>
+                    <div class="dashboard_content_sec">
+                        <div class= "dashboard_content_sec_head">
+                            {{i.properties.name}}
+                        </div>
+                        <div>
+                            Features : {{i.properties.features}}
+                        </div>
+                        <div>
+                            Location : {{i.properties.location}}
+                        </div>
+                        <div>
+                           <span>Rent :</span> <span class="dashboard_amount_sec">{{i.rent_cost}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            
+        </div>
+    </div>
+</body>
+</html>

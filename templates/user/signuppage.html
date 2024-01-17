@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+{% load static %}
+{% load rest_framework %}
+<html>
+<head>
+    <title>Sign Up</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+
+</head>
+<body class = "d-flex flex-column min-vh-100 real_body">
+    <div class="container-fluid ">
+        <div class="real_black_head">
+            <p>Real Estate Management</p>
+        </div>
+        <div class="real_center_grid">
+            <div>
+            </div>
+            <div>
+                <h2>Sign Up</h2>
+                <form method="post" action="{% url 'dashboard:register_user' %}">
+                    {% csrf_token %}
+                    {% render_form serializer %}
+                    <button class="btn btn-light" type="submit">Sign Up</button>
+                </form>
+                <div>
+                    <a href="{% url 'dashboard:login_user' %}" class="tag_font">Already have an account ? </a>
+                </div>
+                {% if error %}
+                <div class="alert alert-danger">
+                    {{ error }}
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</body>
+</html>
